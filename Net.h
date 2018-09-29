@@ -8,10 +8,12 @@ class Net
 public:
 	Net(vector<vector<Neuron>> & tempNet);
 	vector<vector<Neuron>> realNet;
-	void initializeInput();
+	void initializeInput(vector<double> & inputs);
+
 	~Net();
 
 private:
-
+	vector<Neuron>outputVec;
+	vector<Neuron>inputVec;
 };
 

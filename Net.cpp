@@ -21,9 +21,12 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 	}
 }
 
-void Net::initializeInput()
+void Net::initializeInput(vector<double> & inputs)
 {
-
+	for (unsigned int i = 0; i < inputs.size(); i++)
+	{
+		realNet[0][i].value = inputs[i];
+	}
 }
 
 Net::~Net()
