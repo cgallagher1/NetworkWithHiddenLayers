@@ -73,7 +73,7 @@ int main()
 
 	//Where to pull data
 	ifstream testData;
-	testData.open("C:/Users/chuck/Documents/Math Thesis/TestData.txt");
+	testData.open("C:/Users/chuck_000/Documents/Math Thesis/TestData.txt");
 
 
 	//Holds input and output data
@@ -159,10 +159,16 @@ int main()
 			//Initialize the inputs
 			myNet.initializeInput(inputData[i]);
 
-			//Gets the sigmoid values
-			vector<double> tempSig;
-			
+			//Gets sigmoid outputs
+			sigmoidData.push_back(myNet.sumWeightsAndValues());
 		}
+
+		currentError = myNet.calcError(sigmoidData, outputData);
+		for (int i = 0; i < sigmoidData.size(); i++)
+		{
+			cout << i << " test guess: " << sigmoidData[i][0] << " Should be: " << outputData[i][0] << endl;
+		}
+		cout << "Current Error: " << currentError << endl;
 	}
 
 	cin.get();

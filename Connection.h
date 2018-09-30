@@ -6,7 +6,7 @@ public:
 	~Connection();
 	double weightDelta;
 	double weightOld;
-	int neuronIndex;
+	int neuronValue;
 private:
 
 };

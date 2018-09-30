@@ -11,7 +11,8 @@ public:
 	void initializeInput(vector<double> & inputs);
 	double sigmoid(double & sum);
 	double derivate(double & sum);
-	double sumWeightsAndValues();
+	vector<double> sumWeightsAndValues();
+	double calcError(vector<vector<double>> & sigmoidData, vector<vector<double>> & outputData);
 
 	~Net();
 

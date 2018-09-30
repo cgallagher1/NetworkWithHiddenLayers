@@ -94,20 +94,39 @@ double Net::derivate(double & sum)
 	return afterDer;
 }
 
-double Net::sumWeightsAndValues()
+vector<double> Net::sumWeightsAndValues()
 {
-	double sum;
+	vector<double> tempSigData;
 	for (int i = 1; i < realNet.size(); i++)
 	{
 		for (int j = 0; j < realNet[i].size(); j++)
 		{
 			for (int k = 0; k < realNet[i][j].connections.size(); k++)
 			{
-
+				realNet[i][j].value += realNet[i][j].connections[k].weightOld * realNet[i - 1][k].value;
+			}
+			realNet[i][j].value = sigmoid(realNet[i][j].value);
+			if (i == realNet.size() - 1)
+			{
+				tempSigData.push_back(realNet[i][j].value);
 			}
 		}
 	}
-	return 0.0;
+	return tempSigData;
+}
+
+double Net::calcError(vector<vector<double>>& sigmoidData, vector<vector<double>>& outputData)
+{
+	double runningDifference = 0;
+	for (unsigned int i = 0; i < sigmoidData.size(); i++)
+	{
+		double tempDifference = sigmoidData[i][0] - outputData[i][0];
+		runningDifference += pow(tempDifference, 2);
+	}
+
+	runningDifference = runningDifference * (1.00 / sigmoidData.size());
+
+	return runningDifference;
 }
 
 Net::~Net()
