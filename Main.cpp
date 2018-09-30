@@ -158,6 +158,10 @@ int main()
 		{
 			//Initialize the inputs
 			myNet.initializeInput(inputData[i]);
+
+			//Gets the sigmoid values
+			vector<double> tempSig;
+			
 		}
 	}
 

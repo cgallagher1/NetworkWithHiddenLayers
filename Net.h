@@ -9,6 +9,9 @@ public:
 	Net(vector<vector<Neuron>> & tempNet);
 	vector<vector<Neuron>> realNet;
 	void initializeInput(vector<double> & inputs);
+	double sigmoid(double & sum);
+	double derivate(double & sum);
+	double sumWeightsAndValues();
 
 	~Net();
 
