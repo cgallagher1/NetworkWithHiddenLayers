@@ -13,11 +13,9 @@ public:
 	double derivate(double & sum);
 	vector<double> sumWeightsAndValues();
 	double calcError(vector<vector<double>> & sigmoidData, vector<vector<double>> & outputData);
-
+	double currentError;
 	~Net();
 
 private:
-	vector<Neuron>outputVec;
-	vector<Neuron>inputVec;
 };
 

@@ -120,8 +120,11 @@ double Net::calcError(vector<vector<double>>& sigmoidData, vector<vector<double>
 	double runningDifference = 0;
 	for (unsigned int i = 0; i < sigmoidData.size(); i++)
 	{
-		double tempDifference = sigmoidData[i][0] - outputData[i][0];
-		runningDifference += pow(tempDifference, 2);
+		for (int j = 0; j < sigmoidData[i].size(); j++)
+		{
+			double tempDifference = sigmoidData[i][0] - outputData[i][0];
+			runningDifference += pow(tempDifference, 2);
+		}
 	}
 
 	runningDifference = runningDifference * (1.00 / sigmoidData.size());

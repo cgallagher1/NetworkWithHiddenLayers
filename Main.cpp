@@ -163,6 +163,8 @@ int main()
 			sigmoidData.push_back(myNet.sumWeightsAndValues());
 		}
 
+
+
 		currentError = myNet.calcError(sigmoidData, outputData);
 		for (int i = 0; i < sigmoidData.size(); i++)
 		{
