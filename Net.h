@@ -14,8 +14,10 @@ public:
 	vector<double> sumWeightsAndValues();
 	double calcError(vector<vector<double>> & sigmoidData, vector<vector<double>> & outputData);
 	double currentError;
+	void backProp(vector<vector<double>> & sigmoidData, vector<vector<double>> & outputData, vector<vector<double>> & inputData);
 	~Net();
 
 private:
+	vector<vector<double>> preActivationSum;
 };
 
