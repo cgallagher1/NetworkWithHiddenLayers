@@ -139,16 +139,30 @@ double Net::calcError(vector<vector<double>>& sigmoidData, vector<vector<double>
 
 void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& outputData, vector<vector<double>>& inputData)
 {
+	//All Layers starting from the back
 	for (int i = realNet.size() - 1; i >= 0; i--)
 	{
 		double weightUpdate = 0;
+		//Specific Layer
 		for (int j = 0; j < realNet[i].size(); j++)
 		{
+			//Specific node has x amount of connections
 			for (int k = 0; k < realNet[i][j].connections.size(); k++)
 			{
+				//Updating the weights
 				for (int l = 0; l < sigmoidData.size(); l++)
 				{
-					weightUpdate += 2 * (sigmoidData[k][l] - outputData[k][l]) * derivate(preActivationSum[k][l]) * realNet[i-1][j].value;
+					double tempWeight = 0;
+					tempWeight = 2 * (sigmoidData[k][l] - outputData[k][l]);
+					if (i == realNet.size() - 1)
+					{
+
+					}
+					for (int m = 0; m < (realNet.size() - 1) - i; m++)
+					{
+
+					}
+					//weightUpdate += 2 * (sigmoidData[k][l] - outputData[k][l]) * derivate(preActivationSum[k][l]) * realNet[i-1][j].value;
 				}
 			}
 		}
