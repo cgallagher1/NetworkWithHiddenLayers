@@ -161,7 +161,7 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 				//Updating the weights
 				for (int l = 0; l < sigmoidData.size(); l++)
 				{
-					double tempWeight = 0;
+					double tempWeight = 1;
 					tempWeight = 2 * (sigmoidData[k][l] - outputData[k][l]);
 					if (i == realNet.size() - 1)
 					{
@@ -170,14 +170,26 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 						{
 							sum += preActivationSum[k][n];
 						}
-						tempWeight = tempWeight * derivate(sum) * hiddenLayers[i-1][l];
+						tempWeight = tempWeight * derivate(sum) * hiddenLayers[k][l];
 					}
 					else
 					{
+						double product = 1;
 						for (int m = 0; m < (realNet.size() - 1) - i; m++)
 						{
+							double sum = 0;
 
+							for (int p = 0; p < preActivationSum[m].size(); p++)
+							{
+								sum += preActivationSum[m][p];
+							}
+
+							sum = derivate(sum);
+
+							product = product * sum;
 						}
+
+						tempWeight = tempWeight * product * hiddenLayers[k][l];
 					}
 					weightUpdate += tempWeight;
 					//weightUpdate += 2 * (sigmoidData[k][l] - outputData[k][l]) * derivate(preActivationSum[k][l]) * realNet[i-1][j].value;
