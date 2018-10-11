@@ -174,6 +174,8 @@ int main()
 			}
 		}
 		cout << "Current Error: " << currentError << endl;
+
+		myNet.backProp(sigmoidData, outputData, inputData);
 	}
 
 	cin.get();

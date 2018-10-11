@@ -5,6 +5,7 @@
 
 const double e = 2.7182818284590452353602874713527;
 
+
 Net::Net(vector<vector<Neuron>> & tempNet)
 {
 	realNet = tempNet;
@@ -71,7 +72,7 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 			}
 		}
 	}
-
+	learningRate = .1;
 }
 
 void Net::initializeInput(vector<double> & inputs)
@@ -100,6 +101,7 @@ vector<double> Net::sumWeightsAndValues()
 	for (int i = 1; i < realNet.size(); i++)
 	{
 		vector<double> preActivation;
+		vector<double> tempHidden;
 		for (int j = 0; j < realNet[i].size(); j++)
 		{
 			double tempCalc = 0;
@@ -107,13 +109,20 @@ vector<double> Net::sumWeightsAndValues()
 			{
 				tempCalc += realNet[i][j].connections[k].weightOld * realNet[i - 1][k].value;
 			}
-			realNet[i][j].value = tempCalc;
 			preActivation.push_back(tempCalc);
-			realNet[i][j].value = sigmoid(realNet[i][j].value);
+			realNet[i][j].value = sigmoid(tempCalc);
 			if (i == realNet.size() - 1)
 			{
 				tempSigData.push_back(realNet[i][j].value);
 			}
+			else
+			{
+				tempHidden.push_back(realNet[i][j].value);
+			}
+		}
+		if (i != realNet.size() - 1)
+		{
+			hiddenLayers.push_back(tempHidden);
 		}
 		preActivationSum.push_back(preActivation);
 	}
@@ -140,7 +149,7 @@ double Net::calcError(vector<vector<double>>& sigmoidData, vector<vector<double>
 void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& outputData, vector<vector<double>>& inputData)
 {
 	//All Layers starting from the back
-	for (int i = realNet.size() - 1; i >= 0; i--)
+	for (int i = realNet.size() - 1; i >= 1; i--)
 	{
 		double weightUpdate = 0;
 		//Specific Layer
@@ -156,14 +165,25 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 					tempWeight = 2 * (sigmoidData[k][l] - outputData[k][l]);
 					if (i == realNet.size() - 1)
 					{
-
+						double sum = 0;
+						for (int n = 0; n < preActivationSum[k].size(); n++)
+						{
+							sum += preActivationSum[k][n];
+						}
+						tempWeight = tempWeight * derivate(sum) * hiddenLayers[i-1][l];
 					}
-					for (int m = 0; m < (realNet.size() - 1) - i; m++)
+					else
 					{
+						for (int m = 0; m < (realNet.size() - 1) - i; m++)
+						{
 
+						}
 					}
+					weightUpdate += tempWeight;
 					//weightUpdate += 2 * (sigmoidData[k][l] - outputData[k][l]) * derivate(preActivationSum[k][l]) * realNet[i-1][j].value;
 				}
+				realNet[i][j].connections[k].weightDelta = weightUpdate * -1;
+				realNet[i][j].connections[k].weightOld = realNet[i][j].connections[k].weightOld + (learningRate * realNet[i][j].connections[k].weightDelta);
 			}
 		}
 	}

@@ -19,5 +19,7 @@ public:
 
 private:
 	vector<vector<double>> preActivationSum;
+	vector<vector<double>> hiddenLayers;
+	double learningRate;
 };
 
