@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-	srand(time(0));
+	//srand(time(0));
 
 	double currentError = 100.00;
 
@@ -73,7 +73,7 @@ int main()
 
 	//Where to pull data
 	ifstream testData;
-	testData.open("C:/Users/chuck/Documents/Math Thesis/TestData.txt");
+	testData.open("C:/Users/chuck_000/Documents/Math Thesis/TestData.txt");
 
 
 	//Holds input and output data
