@@ -179,13 +179,15 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 					double tempWeight = 0;
 					for (int l = 0; l < sigmoidData[i].size(); l++)
 					{
+						preActStart = hiddenLayers.size();
 						tempWeight = 2 * (sigmoidData[i][k] - outputData[i][k]);
-						double product = 0;
-						for (int m = 0; m < (realNet.size() - j) + 1; m++)
+						double product = 1;
+						for (int m = 0; m < (realNet.size() - j); m++)
 						{
-							product *= preActivationSum[i][preActStart];
+							product *= derivate(preActivationSum[i][preActStart]);
 							preActStart = preActStart - realNet[j].size();
 						}
+						tempWeight = tempWeight * product;
 						if (j - 1 == 0)
 						{
 							product = product * inputData[i][inputStart];
