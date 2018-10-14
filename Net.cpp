@@ -148,68 +148,57 @@ double Net::calcError(vector<vector<double>>& sigmoidData, vector<vector<double>
 
 void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& outputData, vector<vector<double>>& inputData)
 {
-	//All Layers starting from the back
-	for (int i = realNet.size() - 1; i >= 1; i--)
+	//Every Test
+	for (int i = 0; i < sigmoidData.size(); i++)
 	{
-		double weightUpdate = 0;
-		//How many nodes in a specific layer
-		for (int j = 0; j < realNet[i].size(); j++)
+		int inputStart = 0;
+		//Every Layer starting from Outer
+		for (int j = realNet.size() - 1; j >=1 ; j--)
 		{
-			//Updating Weights
-			if (i == realNet.size() - 1)
+			int preActStart = hiddenLayers.size();
+			//Every node in a layer
+			for (int k = 0; k < realNet[j].size(); k++)
 			{
-				int preActStart = hiddenLayers.size();
-				for (int n = 0; n < realNet[i][j].connections.size(); n++)
+				//Output to Hidden
+				if (j == realNet.size() - 1)
 				{
-					for (int k = 0; k < sigmoidData.size(); k++)
+					//Every Weight connected to out put node
+					for (int l = 0; l < realNet[j][k].connections.size(); l++)
 					{
-						double tempWeight = 1;
-						tempWeight = 2 * (sigmoidData[k][j] - outputData[k][j]);
-						double sum = preActivationSum[k][preActStart];
-						tempWeight = tempWeight * derivate(sum) * hiddenLayers[k][n];
-						realNet[i][j].connections[k].weightDelta = tempWeight * -1;
-						realNet[i][j].connections[k].weightOld = realNet[i][j].connections[k].weightOld + (learningRate * realNet[i][j].connections[k].weightDelta);
-					}
-				}
-				preActStart++;
-			}
-			/*
-			//How many weights in a node
-			for (int k = 0; k < realNet[i][j].connections.size(); k++)
-			{
-				//Updating the weights
-				if (i == realNet.size() -1)
-				{
-					int preActStart = hiddenLayers.size();
-					for (int n = 0; n < sigmoidData.size(); n++)
-					{
-						double tempWeight = 1;
-						tempWeight = 2 * (sigmoidData[k][j] - outputData[k][j]);
-						double sum = preActivationSum[k][preActStart];
-						tempWeight = tempWeight * derivate(sum) * hiddenLayers[k][n];
-						realNet[i][j].connections[k].weightDelta = tempWeight * -1;
-						realNet[i][j].connections[k].weightOld = realNet[i][j].connections[k].weightOld + (learningRate * realNet[i][j].connections[k].weightDelta);
+						double tempWeight = 2 * (sigmoidData[i][k] - outputData[i][k]);
+						double sum = preActivationSum[i][preActStart];
+						tempWeight = tempWeight * derivate(sum) * hiddenLayers[i][l];
+						realNet[j][k].connections[l].weightDelta = tempWeight * -1;
+						realNet[j][k].connections[l].weightOld = realNet[j][k].connections[l].weightOld + (learningRate * realNet[j][k].connections[l].weightDelta);
 					}
 					preActStart++;
-					for (int l = 0; l < sigmoidData.size(); l++)
-					{
-						
-					}
 				}
+				//Hidden to Hidden
 				else
 				{
-					double sigmoidSum = 0;
-					double overallSum = 0;
-					for (int m = 0; m < sigmoidData.size(); m++)
+					double tempWeight = 0;
+					for (int l = 0; l < sigmoidData[i].size(); l++)
 					{
-						double tempWeight = 1;
-						tempWeight = 2 * (sigmoidData[k][m] - outputData[k][m]);
-						double sum = preActivationSum[k][m];
-						tempWeight = tempWeight * derivate(sum) * hiddenLayers[k][m];
-						sigmoidSum += tempWeight;
+						tempWeight = 2 * (sigmoidData[i][k] - outputData[i][k]);
+						double product = 0;
+						for (int m = 0; m < (realNet.size() - j) + 1; m++)
+						{
+							product *= preActivationSum[i][preActStart];
+							preActStart = preActStart - realNet[j].size();
+						}
+						if (j - 1 == 0)
+						{
+							product = product * inputData[i][inputStart];
+							tempWeight += product;
+							inputStart++;
+						}
+						else
+						{
+
+						}
 					}
 				}
-			}*/
+			}
 		}
 	}
 }
