@@ -151,7 +151,6 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 	//Every Test
 	for (int i = 0; i < sigmoidData.size(); i++)
 	{
-		int inputStart = 0;
 		//Every Layer starting from Outer
 		for (int j = realNet.size() - 1; j >=1 ; j--)
 		{
@@ -176,33 +175,43 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 				//Hidden to Hidden
 				else
 				{
-					double tempWeight = 0;
-					for (int l = 0; l < sigmoidData[i].size(); l++)
+					int inputStart = 0;
+					for (int o = 0; o < realNet[j][k].connections.size() ; o++)
 					{
-						preActStart = hiddenLayers.size();
-						tempWeight = 2 * (sigmoidData[i][k] - outputData[i][k]);
-						double product = 1;
-						for (int m = 0; m < (realNet.size() - j); m++)
+						double runningSum = 0;
+						for (int l = 0; l < sigmoidData[i].size(); l++)
 						{
-							product *= derivate(preActivationSum[i][preActStart]);
-							preActStart = preActStart - realNet[j].size();
-						}
-						tempWeight = tempWeight * product;
-						if (j - 1 == 0)
-						{
-							product = product * inputData[i][inputStart];
-							tempWeight += product;
-							inputStart++;
-						}
-						else
-						{
+							double tempWeight = 0;
+							preActStart = hiddenLayers.size() + l;
+							tempWeight = 2 * (sigmoidData[i][l] - outputData[i][l]);
+							double product = 1;
+							for (int m = 0; m < (realNet.size() - j); m++)
+							{
+								product *= derivate(preActivationSum[i][preActStart]);
+								preActStart = k;
+							}
+							tempWeight = tempWeight * product;
+							if (j - 1 == 0)
+							{
+								tempWeight = tempWeight * inputData[i][inputStart];
+							}
+							runningSum += tempWeight;
+							/* Only for more hidden layers
+							else
+							{
 
+							}*/
 						}
+						realNet[j][k].connections[o].weightDelta = runningSum * -1;
+						realNet[j][k].connections[o].weightOld = realNet[j][k].connections[o].weightOld + (learningRate * realNet[j][k].connections[o].weightDelta);
+						inputStart++;
 					}
 				}
 			}
 		}
 	}
+	preActivationSum.clear();
+	hiddenLayers.clear();
 }
 
 Net::~Net()

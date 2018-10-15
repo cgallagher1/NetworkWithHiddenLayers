@@ -31,12 +31,12 @@ int main()
 
 	tempNet.push_back(inputNodeVec);
 
-	int howManyHiddenLayers;
-	cout << "Please enter how many hidden layers you want: ";
-	cin >> howManyHiddenLayers;
+	int howManyHiddenLayers = 1;
+	/*cout << "Please enter how many hidden layers you want: ";
+	cin >> howManyHiddenLayers;*/
 
 	int hiddenNodesPerLayer;
-	cout << "Please enter how many hidden nodes per layer: ";
+	cout << "Please enter how many hidden nodes layer: ";
 	cin >> hiddenNodesPerLayer;
 
 	for (int i = 0; i < howManyHiddenLayers; i++)
@@ -73,7 +73,7 @@ int main()
 
 	//Where to pull data
 	ifstream testData;
-	testData.open("C:/Users/chuck_000/Documents/Math Thesis/TestData.txt");
+	testData.open("C:/Users/chuck/Documents/Math Thesis/TestData.txt");
 
 
 	//Holds input and output data
