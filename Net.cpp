@@ -154,7 +154,7 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 		//Every Layer starting from Outer
 		for (int j = realNet.size() - 1; j >=1 ; j--)
 		{
-			int preActStart = hiddenLayers.size();
+			int preActStart = preActivationSum[i].size() - outputData[i].size();
 			//Every node in a layer
 			for (int k = 0; k < realNet[j].size(); k++)
 			{
@@ -178,11 +178,11 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 					int inputStart = 0;
 					for (int o = 0; o < realNet[j][k].connections.size() ; o++)
 					{
+						preActStart = preActivationSum[i].size() - outputData[i].size();
 						double runningSum = 0;
 						for (int l = 0; l < sigmoidData[i].size(); l++)
 						{
 							double tempWeight = 0;
-							preActStart = hiddenLayers.size() + l;
 							tempWeight = 2 * (sigmoidData[i][l] - outputData[i][l]);
 							double product = 1;
 							for (int m = 0; m < (realNet.size() - j); m++)

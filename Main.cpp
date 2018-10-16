@@ -73,7 +73,7 @@ int main()
 
 	//Where to pull data
 	ifstream testData;
-	testData.open("C:/Users/chuck/Documents/Math Thesis/TestData.txt");
+	testData.open("C:/Users/chuck_000/Documents/Math Thesis/TestData.txt");
 
 
 	//Holds input and output data
@@ -166,13 +166,13 @@ int main()
 
 
 		currentError = myNet.calcError(sigmoidData, outputData);
-		for (int i = 0; i < sigmoidData.size(); i++)
+		/*for (int i = 0; i < sigmoidData.size(); i++)
 		{
 			for (int j = 0; j < sigmoidData[i].size(); j++)
 			{
 				cout << i << " test guess: " << sigmoidData[i][j] << " Should be: " << outputData[i][j] << endl;
 			}
-		}
+		}*/
 		cout << "Current Error: " << currentError << endl;
 
 		myNet.backProp(sigmoidData, outputData, inputData);
