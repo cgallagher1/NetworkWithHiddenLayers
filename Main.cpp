@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-	//srand(time(0));
+	srand(time(0));
 
 	double currentError = 100.00;
 
@@ -39,7 +39,18 @@ int main()
 	cout << "Please enter how many hidden nodes layer: ";
 	cin >> hiddenNodesPerLayer;
 
-	for (int i = 0; i < howManyHiddenLayers; i++)
+	vector<Neuron> temp;
+	for (int j = 0; j < hiddenNodesPerLayer; j++)
+	{
+		Neuron tempNeuron;
+		temp.push_back(tempNeuron);
+	}
+	if (temp.size() > 0)
+	{
+		tempNet.push_back(temp);
+	}
+
+	/*for (int i = 0; i < howManyHiddenLayers; i++)
 	{
 		vector<Neuron> temp;
 		for (int j = 0; j < hiddenNodesPerLayer; j++)
@@ -48,7 +59,7 @@ int main()
 			temp.push_back(tempNeuron);
 		}
 		tempNet.push_back(temp);
-	}
+	}*/
 
 	int howManyOutputs;
 	cout << "Please enter how many output nodes you want: ";
@@ -73,7 +84,7 @@ int main()
 
 	//Where to pull data
 	ifstream testData;
-	testData.open("C:/Users/chuck_000/Documents/Math Thesis/TestData.txt");
+	testData.open("C:/Users/chuck/Documents/Math Thesis/TestData.txt");
 
 
 	//Holds input and output data
@@ -142,7 +153,7 @@ int main()
 
 	testData.close();
 
-	int numTests = 0;
+	double numTests = 0;
 	vector<vector<double>> sigmoidData;
 
 	//Begins testing
@@ -150,7 +161,7 @@ int main()
 	{
 		numTests++;
 		
-		cout << "Test Number: " << numTests << endl;
+		//cout << "Test Number: " << numTests << endl;
 		sigmoidData.clear();
 
 		//For each data set
@@ -177,7 +188,7 @@ int main()
 
 		myNet.backProp(sigmoidData, outputData, inputData);
 	}
-
+	cout << "Test Number: " << numTests << endl;
 	cin.get();
 	return 0;
 }
