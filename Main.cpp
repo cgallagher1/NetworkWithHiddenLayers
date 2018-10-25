@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-	srand(time(0));
+	//srand(time(0));
 
 	double currentError = 100.00;
 
@@ -184,11 +184,11 @@ int main()
 				cout << i << " test guess: " << sigmoidData[i][j] << " Should be: " << outputData[i][j] << endl;
 			}
 		}*/
+		cout << "Test Number: " << numTests << endl;
 		cout << "Current Error: " << currentError << endl;
 
 		myNet.backProp(sigmoidData, outputData, inputData);
 	}
-	cout << "Test Number: " << numTests << endl;
 	cin.get();
 	return 0;
 }

@@ -72,7 +72,7 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 			}
 		}
 	}
-	learningRate = .01;
+	learningRate = .1;
 }
 
 void Net::initializeInput(vector<double> & inputs)
@@ -161,10 +161,11 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 				}
 
 				//delta weight = -(2E/2w)
-				realNet[realNet.size() - 1][i].connections[j].weightDelta = realNet[realNet.size() - 1][i].connections[j].weightDelta * -1;
+				realNet[realNet.size() - 1][i].connections[j].weightDelta = (realNet[realNet.size() - 1][i].connections[j].weightDelta * -1) * .5;
 
 				//Updates weight
 				realNet[realNet.size() - 1][i].connections[j].weightOld = realNet[realNet.size() - 1][i].connections[j].weightOld + (learningRate * realNet[realNet.size() - 1][i].connections[j].weightDelta);
+				realNet[realNet.size() - 1][i].connections[j].weightDelta = 0;
 			}
 		}
 	}
