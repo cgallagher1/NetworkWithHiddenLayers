@@ -72,7 +72,7 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 			}
 		}
 	}
-	learningRate = .1;
+	learningRate = .0001;
 }
 
 void Net::initializeInput(vector<double> & inputs)

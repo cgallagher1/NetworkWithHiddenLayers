@@ -3,7 +3,7 @@
 
 Connection::Connection()
 {
-	double r = ((double)rand() / (RAND_MAX));
+	double r = (rand() % 2) - 1;
 	weightOld = r;
 	weightDelta = 0;
 }
