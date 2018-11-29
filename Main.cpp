@@ -52,13 +52,13 @@ int main()
 
 	/*for (int i = 0; i < howManyHiddenLayers; i++)
 	{
-		vector<Neuron> temp;
-		for (int j = 0; j < hiddenNodesPerLayer; j++)
-		{
-			Neuron tempNeuron;
-			temp.push_back(tempNeuron);
-		}
-		tempNet.push_back(temp);
+	vector<Neuron> temp;
+	for (int j = 0; j < hiddenNodesPerLayer; j++)
+	{
+	Neuron tempNeuron;
+	temp.push_back(tempNeuron);
+	}
+	tempNet.push_back(temp);
 	}*/
 
 	int howManyOutputs;
@@ -84,7 +84,7 @@ int main()
 
 	//Where to pull data
 	ifstream testData;
-	testData.open("C:/Users/chuck_000/Documents/Math Thesis/TestData.txt");
+	testData.open("C:/Users/chuck/Documents/Math Thesis/TestData.txt");
 
 
 	//Holds input and output data
@@ -132,7 +132,7 @@ int main()
 		for (int i = 0; i < howManyOutputs; i++)
 		{
 			int pos = outputs.find(",");
-			
+
 			if (pos == -1)
 			{
 				int intOutVal = stoi(outputs);
@@ -160,7 +160,7 @@ int main()
 	while (currentError > threshold)
 	{
 		numTests++;
-		
+
 		//cout << "Test Number: " << numTests << endl;
 		sigmoidData.clear();
 
@@ -179,10 +179,10 @@ int main()
 		currentError = myNet.calcError(sigmoidData, outputData);
 		/*for (int i = 0; i < sigmoidData.size(); i++)
 		{
-			for (int j = 0; j < sigmoidData[i].size(); j++)
-			{
-				cout << i << " test guess: " << sigmoidData[i][j] << " Should be: " << outputData[i][j] << endl;
-			}
+		for (int j = 0; j < sigmoidData[i].size(); j++)
+		{
+		cout << i << " test guess: " << sigmoidData[i][j] << " Should be: " << outputData[i][j] << endl;
+		}
 		}*/
 		//cout << "Test Number: " << numTests << endl;
 		cout << "Current Error: " << currentError << endl;
