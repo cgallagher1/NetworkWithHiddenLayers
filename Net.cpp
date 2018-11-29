@@ -20,7 +20,7 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 			}
 		}
 	}
-	else if(realNet.size() == 3)
+	else if (realNet.size() == 3)
 	{
 		for (int i = 0; i < realNet[1].size(); i++)
 		{
@@ -55,7 +55,7 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 		{
 			for (int j = 0; j < realNet[i].size(); j++)
 			{
-				for (int k = 0; k < realNet[i-1].size(); k++)
+				for (int k = 0; k < realNet[i - 1].size(); k++)
 				{
 					Connection temp;
 					realNet[i][j].connections.push_back(temp);
@@ -65,14 +65,14 @@ Net::Net(vector<vector<Neuron>> & tempNet)
 		//For last hidden to output
 		for (int i = 0; i < realNet[realNet.size() - 1].size(); i++)
 		{
-			for (int j = 0; j < realNet[realNet.size() -2].size(); j++)
+			for (int j = 0; j < realNet[realNet.size() - 2].size(); j++)
 			{
 				Connection temp;
 				realNet[realNet.size() - 1][i].connections.push_back(temp);
 			}
 		}
 	}
-	learningRate = .0001;
+	learningRate = 55;
 }
 
 void Net::initializeInput(vector<double> & inputs)
@@ -222,7 +222,6 @@ void Net::backProp(vector<vector<double>>& sigmoidData, vector<vector<double>>& 
 								/* Only for more hidden layers
 								else
 								{
-
 								}*/
 							}
 							realNet[j][k].connections[o].weightDelta = runningSum * -1;
